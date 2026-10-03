@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Storico vendite{% endblock %}
+
+{% block content %}
+    <h1>Storico vendite</h1>
+
+    <p><a href="{{ url_for('dashboard') }}">← Torna alla dashboard</a></p>
+
+    {% for vendita in vendite %}
+    <div style="border: 1px solid #999; border-radius: 4px; padding: 15px; margin-bottom: 15px; background-color: white;">
+        <p>
+            <strong>Vendita #{{ vendita.id }}</strong> — {{ vendita.cognome }} {{ vendita.nome }}<br>
+            Data: {{ vendita.data_vendita }}<br>
+            Totale: {{ "%.2f"|format(vendita.totale) }} €
+        </p>
+
+        <table border="1" cellpadding="6">
+            <thead>
+                <tr>
+                    <th>Libro</th>
+                    <th>Quantità</th>
+                    <th>Prezzo unitario</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dettaglio in vendita.dettagli %}
+                <tr>
+                    <td>{{ dettaglio.titolo }}</td>
+                    <td>{{ dettaglio.quantita }}</td>
+                    <td>{{ "%.2f"|format(dettaglio.prezzo_unitario) }} €</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+{% endblock %}

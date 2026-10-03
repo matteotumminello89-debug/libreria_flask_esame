@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Gestione libri{% endblock %}
+
+{% block content %}
+    <h1>Gestione libri</h1>
+
+    <p><a href="{{ url_for('dashboard') }}">← Torna alla dashboard</a></p>
+    <p><a href="{{ url_for('aggiungi_libro') }}">+ Aggiungi nuovo libro</a></p>
+
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Autore</th>
+                <th>ISBN</th>
+                <th>Prezzo</th>
+                <th>Categoria</th>
+                <th>Copie</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for libro in libri %}
+            <tr>
+                <td>{{ libro.titolo }}</td>
+                <td>{{ libro.autore }}</td>
+                <td>{{ libro.isbn }}</td>
+                <td>{{ "%.2f"|format(libro.prezzo) }} €</td>
+                <td>{{ libro.categoria }}</td>
+                <td>{{ libro.quantita }}</td>
+                <td>
+                    <a href="{{ url_for('modifica_libro', id=libro.id) }}">Modifica</a> |
+                    <a href="{{ url_for('elimina_libro', id=libro.id) }}" onclick="return confirm('Sei sicuro di voler eliminare questo libro?')">Elimina</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

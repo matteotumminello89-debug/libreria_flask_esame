@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Gestione contatti{% endblock %}
+
+{% block content %}
+    <h1>Gestione contatti</h1>
+
+    <p><a href="{{ url_for('dashboard') }}">← Torna alla dashboard</a></p>
+    <p><a href="{{ url_for('aggiungi_contatto') }}">+ Aggiungi nuovo contatto</a></p>
+
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Città</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for utente in utenti %}
+            <tr>
+                <td>{{ utente.nome }}</td>
+                <td>{{ utente.cognome }}</td>
+                <td>{{ utente.email }}</td>
+                <td>{{ utente.telefono }}</td>
+                <td>{{ utente.citta }}</td>
+                <td>
+                    <a href="{{ url_for('modifica_contatto', id=utente.id) }}">Modifica</a> |
+                    <a href="{{ url_for('elimina_contatto', id=utente.id) }}" onclick="return confirm('Sei sicuro di voler eliminare questo contatto?')">Elimina</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Modifica quantità{% endblock %}
+
+{% block content %}
+    <h1>Modifica quantità — {{ libro.titolo }}</h1>
+
+    <form method="post">
+        <label for="quantita">Copie disponibili</label><br>
+        <input type="number" id="quantita" name="quantita" value="{{ libro.quantita }}" required><br>
+
+        <button type="submit">Salva</button>
+    </form>
+
+    <p><a href="{{ url_for('gestione_magazzino') }}">← Torna al magazzino</a></p>
+{% endblock %}

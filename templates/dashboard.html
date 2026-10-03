@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Benvenuto, {{ session.operatore_nome }}</h1>
+
+    <ul>
+        <li><a href="{{ url_for('gestione_contatti') }}">Gestione contatti</a></li>
+        <li><a href="{{ url_for('gestione_libri') }}">Gestione libri</a></li>
+        <li><a href="{{ url_for('gestione_magazzino') }}">Magazzino</a></li>
+        <li><a href="{{ url_for('storico_vendite') }}">Storico vendite</a></li>
+        <li><a href="{{ url_for('cerca_libro') }}">Cerca libro</a></li>
+        <li><a href="{{ url_for('cerca_persona') }}">Cerca persona</a></li>
+        <li><a href="{{ url_for('statistiche_vendite') }}">Statistiche vendite</a></li>
+        <li><a href="{{ url_for('nuovo_acquisto') }}">Nuovo acquisto</a></li>
+        <li><a href="{{ url_for('nuovo_utente_e_acquisto') }}">Nuovo utente e acquisto</a></li>
+    </ul>
+
+    <p><a href="{{ url_for('logout') }}">Esci</a></p>
+{% endblock %}

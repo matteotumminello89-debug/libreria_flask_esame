@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Cerca persona{% endblock %}
+
+{% block content %}
+    <h1>Cerca persona</h1>
+
+    <p><a href="{{ url_for('dashboard') }}">← Torna alla dashboard</a></p>
+
+    <form method="post">
+        <label for="termine">Nome o cognome</label><br>
+        <input type="text" id="termine" name="termine" value="{{ termine_cercato }}" placeholder="Scrivi qui..." required>
+        <button type="submit">Cerca</button>
+    </form>
+
+    <br>
+
+    {% if termine_cercato %}
+        {% if risultati %}
+            {% for utente in risultati %}
+            <div style="border: 1px solid #999; border-radius: 4px; padding: 15px; margin-bottom: 15px; background-color: white;">
+                <p>
+                    <strong>{{ utente.cognome }} {{ utente.nome }}</strong><br>
+                    Email: {{ utente.email }}<br>
+                    Telefono: {{ utente.telefono }}
+                </p>
+
+                <p><strong>Storico acquisti:</strong></p>
+                {% if utente.acquisti %}
+                    <table border="1" cellpadding="6">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Totale</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for acquisto in utente.acquisti %}
+                            <tr>
+                                <td>{{ acquisto.data_vendita }}</td>
+                                <td>{{ "%.2f"|format(acquisto.totale) }} €</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Nessun acquisto registrato per questo cliente.</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Nessuna persona trovata per "{{ termine_cercato }}".</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

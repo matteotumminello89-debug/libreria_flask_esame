@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Magazzino{% endblock %}
+
+{% block content %}
+    <h1>Magazzino</h1>
+
+    <p><a href="{{ url_for('dashboard') }}">← Torna alla dashboard</a></p>
+
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Autore</th>
+                <th>Copie disponibili</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for libro in libri %}
+            <tr>
+                <td>{{ libro.titolo }}</td>
+                <td>{{ libro.autore }}</td>
+                <td>{{ libro.quantita }}</td>
+                <td><a href="{{ url_for('modifica_quantita', id=libro.id) }}">Aggiorna quantità</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Cerca libro{% endblock %}
+
+{% block content %}
+    <h1>Cerca libro</h1>
+
+    <p><a href="{{ url_for('dashboard') }}">← Torna alla dashboard</a></p>
+
+    <form method="post">
+        <label for="termine">Titolo o autore</label><br>
+        <input type="text" id="termine" name="termine" value="{{ termine_cercato }}" placeholder="Scrivi qui..." required>
+        <button type="submit">Cerca</button>
+    </form>
+
+    <br>
+
+    {% if termine_cercato %}
+        {% if risultati %}
+            <table border="1" cellpadding="8">
+                <thead>
+                    <tr>
+                        <th>Titolo</th>
+                        <th>Autore</th>
+                        <th>Prezzo</th>
+                        <th>Copie disponibili</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for libro in risultati %}
+                    <tr>
+                        <td>{{ libro.titolo }}</td>
+                        <td>{{ libro.autore }}</td>
+                        <td>{{ "%.2f"|format(libro.prezzo) }} €</td>
+                        <td>{{ libro.quantita }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Nessun libro trovato per "{{ termine_cercato }}".</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

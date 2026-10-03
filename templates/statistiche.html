@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Statistiche vendite{% endblock %}
+
+{% block content %}
+    <h1>Statistiche vendite</h1>
+
+    <p><a href="{{ url_for('dashboard') }}">← Torna alla dashboard</a></p>
+
+    <h2>Incasso totale</h2>
+    <p>{{ "%.2f"|format(incasso.incasso_totale or 0) }} €</p>
+
+    <h2>Libri più venduti</h2>
+
+    <label for="periodo">Filtra per mese</label><br>
+    <select id="periodo" onchange="window.location.href = '{{ url_for('statistiche_vendite') }}?periodo=' + this.value">
+        <option value="" {% if not periodo_scelto %}selected{% endif %}>Tutti i periodi</option>
+        {% for p in periodi_disponibili %}
+            <option value="{{ p.periodo }}" {% if p.periodo == periodo_scelto %}selected{% endif %}>{{ p.periodo }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Copie vendute</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for libro in libri_piu_venduti %}
+            <tr>
+                <td>{{ libro.titolo }}</td>
+                <td>{{ libro.totale_venduto }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Classifica clienti per spesa</h2>
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Totale speso</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in classifica_clienti %}
+            <tr>
+                <td>{{ cliente.cognome }} {{ cliente.nome }}</td>
+                <td>{{ "%.2f"|format(cliente.totale_speso) }} €</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Nuovo acquisto{% endblock %}
+
+{% block content %}
+    <h1>Registra un nuovo acquisto</h1>
+
+    {% if errore %}
+        <p style="color: red;">{{ errore }}</p>
+    {% endif %}
+
+    <form method="post">
+        <label for="utente_id">Cliente</label><br>
+        <select id="utente_id" name="utente_id" required>
+            {% for utente in utenti %}
+                <option value="{{ utente.id }}">{{ utente.cognome }} {{ utente.nome }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="cerca_libro">Libro</label><br>
+        <input type="text" id="cerca_libro" list="elenco_libri" placeholder="Scrivi il titolo..." autocomplete="off" required><br><br>
+
+        <datalist id="elenco_libri">
+            {% for libro in libri %}
+                <option data-id="{{ libro.id }}" value="{{ libro.titolo }} — {{ "%.2f"|format(libro.prezzo) }} € ({{ libro.quantita }} disponibili)"></option>
+            {% endfor %}
+        </datalist>
+
+        <!-- Campo nascosto: tiene l'id del libro, viene inviato al server ma non si vede -->
+        <select id="libro_id" name="libro_id" required style="display: none;">
+            <option value=""></option>
+            {% for libro in libri %}
+                <option value="{{ libro.id }}">{{ libro.titolo }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="quantita">Quantità</label><br>
+        <input type="number" id="quantita" name="quantita" value="1" min="1" required><br>
+
+        <button type="submit">Registra acquisto</button>
+    </form>
+
+    <p><a href="{{ url_for('dashboard') }}">← Torna alla dashboard</a></p>
+
+    <script>
+        document.getElementById('cerca_libro').addEventListener('input', function() {
+            const testoScritto = this.value;
+            const opzioni = document.getElementById('elenco_libri').options;
+
+            for (let i = 0; i < opzioni.length; i++) {
+                if (opzioni[i].value === testoScritto) {
+                    const idLibro = opzioni[i].getAttribute('data-id');
+                    document.getElementById('libro_id').value = idLibro;
+                    break;
+                }
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Modifica libro{% endblock %}
+
+{% block content %}
+    <h1>Modifica libro</h1>
+
+    <form method="post">
+        <label for="titolo">Titolo</label><br>
+        <input type="text" id="titolo" name="titolo" value="{{ libro.titolo }}" required><br>
+
+        <label for="autore">Autore</label><br>
+        <input type="text" id="autore" name="autore" value="{{ libro.autore }}" required><br>
+
+        <label for="isbn">ISBN</label><br>
+        <input type="text" id="isbn" name="isbn" value="{{ libro.isbn }}"><br>
+
+        <label for="editore">Editore</label><br>
+        <input type="text" id="editore" name="editore" value="{{ libro.editore }}"><br>
+
+        <label for="prezzo">Prezzo</label><br>
+        <input type="number" step="0.01" id="prezzo" name="prezzo" value="{{ libro.prezzo }}" required><br>
+
+        <label for="categoria_id">Categoria</label><br>
+        <select id="categoria_id" name="categoria_id">
+            {% for categoria in categorie %}
+                <option value="{{ categoria.id }}" {% if categoria.id == libro.categoria_id %}selected{% endif %}>
+                    {{ categoria.nome }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="quantita">Copie a magazzino</label><br>
+        <input type="number" id="quantita" name="quantita" value="{{ libro.quantita }}" required><br>
+
+        <button type="submit">Salva modifiche</button>
+    </form>
+
+    <p><a href="{{ url_for('gestione_libri') }}">← Torna all'elenco libri</a></p>
+{% endblock %}
