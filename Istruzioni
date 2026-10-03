@@ -1,0 +1,21 @@
+ISTRUZIONI PER AVVIARE IL PROGETTO
+
+1. Database MySQL
+   - Importare il file libreria_flask_esame.sql in MySQL (es. tramite HeidiSQL: 
+     tasto destro sulla connessione -> Esegui file SQL, oppure riga di comando)
+   - Credenziali MySQL usate: utente "root", password vuota (default)
+
+2. Ambiente Python
+   - Installare le librerie necessarie:
+     pip install flask
+     pip install mysql-connector-python
+
+3. Avvio
+   - Eseguire il file main.py
+   - Aprire il browser su http://127.0.0.1:5000
+
+4. Accesso al gestionale
+   - Sito pubblico (catalogo libri): http://127.0.0.1:5000
+   - Login gestionale: http://127.0.0.1:5000/login
+   - Username: matteo
+   - Password: matteo123
